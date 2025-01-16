@@ -36,16 +36,16 @@
 run_batch_query = function(uri, user, password, query, field_names, filename, batch_size = 1000) {
   empty_data = as.data.frame(matrix(character(), ncol = length(field_names)))
   names(empty_data) = field_names
-  fwrite(empty_data, filename, sep = "\t", quote = FALSE)
+  data.table::fwrite(empty_data, filename, sep = "\t", quote = FALSE)
   skip = 0
   limit = batch_size
   repeat{
-    message(glue("Fetching batch starting at {skip}"))
-    updated_query = paste0(query, "\n", glue("SKIP {skip} LIMIT {limit}"))
+    message(glue::glue("Fetching batch starting at {skip}"))
+    updated_query = paste0(query, "\n", glue::glue("SKIP {skip} LIMIT {limit}"))
     network_data_snippet = run_query(uri = uri, user = user, password = password, query = updated_query)
     network_data_snippet = convert_df(network_data_snippet, field_names = field_names)
     if (nrow(network_data_snippet) == 0) break
-    fwrite(network_data_snippet, filename, sep = "\t", quote = FALSE, append = TRUE)
+    data.table::fwrite(network_data_snippet, filename, sep = "\t", quote = FALSE, append = TRUE)
     skip = skip + batch_size
   }
 

@@ -1,10 +1,16 @@
 Package: bolt4jr
-Title: An R Interface for the 'Neo4j Bolt' <https://neo4j.com/docs/bolt/current/bolt/> Protocol.
-Version: 0.0.0.9000
+Title: An R Interface for the 'Neo4j Bolt' <https://Neo4j.com/Docs/Bolt/Current/Bolt/> Protocol
+Version: 0.1.0
 Authors@R: 
-    person("Wanjun", "Gu", "wanjun.gu@ucsf.edu", role = c("aut", "cre"))
-Description: `bolt4jr` is an R package that facilitates querying, extracting, and processing  large-scale network data from Neo4j databases using the Bolt protocol. It supports efficient data retrieval, batch processing for large datasets, and seamless conversion of query results into R data frames, making it ideal for bioinformatics, computational biology, and other graph-based applications.
+    person("Wanjun", "Gu", , "wanjun.gu@ucsf.edu", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-7342-7000"))
+Description: An interface that facilitates querying, extracting, and processing large-scale network data from Neo4j databases using the Bolt protocol. It supports efficient data retrieval, batch processing for large datasets, and seamless conversion of query results into R data frames, making it ideal for bioinformatics, computational biology, and other graph-based applications.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
+Imports: 
+    data.table,
+    glue,
+    purrr,
+    reticulate
