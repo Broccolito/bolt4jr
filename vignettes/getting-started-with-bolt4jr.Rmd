@@ -1,0 +1,170 @@
+---
+title: "Getting Started with Bolt4jr"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Getting Started with Bolt4jr}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+`bolt4jr` is an R package for querying, extracting, and processing network data from Neo4j databases using the Bolt protocol. This vignette will guide you through the installation, configuration, and basic usage of the package.
+
+## Installation
+
+Install the package from GitHub using:
+
+```{r,eval=FALSE}
+# Install the remotes package if not already installed
+install.packages("remotes")
+
+# # Install bolt4jr
+remotes::install_github("Broccolito/bolt4jr")
+
+library(bolt4jr)
+```
+
+Alternatively, install the package via CRAN using:
+
+```{r,eval=FALSE}
+install.packages("bolt4jr")
+library(bolt4jr)
+```
+
+## Setting Up Your Environment
+
+Add the Neo4j credentials to your `.Renviron` file:
+```{r,eval=FALSE}
+usethis::edit_r_environ()
+```
+Then add:
+```
+NEO4J_URI=bolt://<URI>
+NEO4J_USER=<username>
+NEO4J_PASSWORD=<password>
+```
+Save and restart R.
+
+## Basic Usage
+
+### Querying Nodes
+```{r,eval=FALSE}
+library(bolt4jr)
+
+# Load credentials from .Renviron
+uri = Sys.getenv("NEO4J_URI")
+user = Sys.getenv("NEO4J_USER")
+password = Sys.getenv("NEO4J_PASSWORD")
+
+# Query nodes
+nodes = run_query(
+  uri = uri,
+  user = user,
+  password = password,
+  query = "
+  MATCH (n)-[r]-(m)
+  WHERE type(r) IN ['ISA_AiA', 'PARTOF_ApA']
+  RETURN DISTINCT elementId(n) AS node_id, n"
+)
+
+# Convert the result to a data frame
+nodes_df = convert_df(nodes, field_names = c("node_id", "n.identifier", "n.name", "n.source"))
+head(nodes_df)
+```
+
+#### Example Output (Nodes Data Frame):
+
+| node_id                                  | n.identifier   | n.name                           | n.source |
+| ---------------------------------------- | -------------- | -------------------------------- | -------- |
+| 4:c77f6410-bc08-43ba-a172-0503ab1c93db:0 | UBERON:0003233 | epithelium of shoulder           | Uberon   |
+| 4:c77f6410-bc08-43ba-a172-0503ab1c93db:1 | UBERON:2001901 | ceratobranchial 3 element        | Uberon   |
+| 4:c77f6410-bc08-43ba-a172-0503ab1c93db:2 | UBERON:0004321 | middle phalanx of manual digit 3 | Uberon   |
+| 4:c77f6410-bc08-43ba-a172-0503ab1c93db:3 | UBERON:0002414 | lumbar vertebra                  | Uberon   |
+| 4:c77f6410-bc08-43ba-a172-0503ab1c93db:4 | UBERON:2005118 | middle lateral line primordium   | Uberon   |
+| 4:c77f6410-bc08-43ba-a172-0503ab1c93db:5 | UBERON:0034769 | lymphomyeloid tissue             | Uberon   |
+
+
+### Querying Edges
+```{r,eval=FALSE}
+# Query edges
+edges = run_query(
+  uri = uri,
+  user = username,
+  password = password,
+  query = "
+  MATCH (n)-[r]-(m)
+  WHERE type(r) IN ['ISA_AiA', 'PARTOF_ApA']
+  RETURN DISTINCT
+    elementId(r) AS edge_id,
+    elementId(startNode(r)) AS start_node_id,
+    elementId(endNode(r)) AS end_node_id,
+    r
+  LIMIT 1000"
+)
+
+# Examine the structure of the result
+unlist(edges[[1]])
+
+# Extract specific fields and convert to a data frame
+edges = convert_df(
+  edges,
+  field_names = c("edge_id", "start_node_id", "end_node_id")
+)
+
+# View the resulting data frame
+head(edges)
+```
+
+
+#### Example Output (Edges Data Frame):
+
+| edge_id                                   | start_node_id                            | end_node_id                              |
+| ----------------------------------------- | ---------------------------------------- | ---------------------------------------- |
+| 4:c77f6410-bc08-43ba-a172-0503ab1c93db:10 | 4:c77f6410-bc08-43ba-a172-0503ab1c93db:0 | 4:c77f6410-bc08-43ba-a172-0503ab1c93db:1 |
+| 4:c77f6410-bc08-43ba-a172-0503ab1c93db:11 | 4:c77f6410-bc08-43ba-a172-0503ab1c93db:2 | 4:c77f6410-bc08-43ba-a172-0503ab1c93db:3 |
+
+
+### Querying Netowrk in Batches
+For large networks, you can use the `run_batch_query` function to process data in chunks. This function appends results to a file incrementally, minimizing memory usage.
+
+#### Extracting Edges in Batches
+```{r,eval=FALSE}
+run_batch_query(
+  uri = uri,
+  user = user,
+  password = password,
+  query = "
+  MATCH (n)-[r]-(m)
+  WHERE type(r) IN ['ISA_AiA', 'PARTOF_ApA']
+  RETURN DISTINCT
+    elementId(r) AS edge_id,
+    elementId(startNode(r)) AS start_node_id,
+    elementId(endNode(r)) AS end_node_id",
+  field_names = c("edge_id", "start_node_id", "end_node_id"),
+  filename = "edges.tsv",
+  batch_size = 1000
+)
+```
+
+### Extracting Nodes in Batches
+
+```{r,eval=FALSE}
+run_batch_query(
+  uri = uri,
+  user = username,
+  password = password,
+  query = "
+  MATCH (n)-[r]-(m)
+  WHERE type(r) IN ['ISA_AiA', 'PARTOF_ApA']
+  RETURN DISTINCT elementId(n) AS node_id, n",
+  field_names = c("node_id", "n.identifier", "n.name", "n.source"),
+  filename = "nodes.tsv",
+  batch_size = 1000
+)
+```
+
+## Advanced Features
+
+- Batch processing for large datasets.
+- Seamless data conversion into R data frames for downstream analysis.
+
+For more details, refer to the package documentation.

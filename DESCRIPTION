@@ -14,3 +14,7 @@ Imports:
     glue,
     purrr,
     reticulate
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
