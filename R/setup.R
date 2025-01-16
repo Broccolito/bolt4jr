@@ -10,7 +10,7 @@
   }, error = function(e) NULL)
 
   if (is.null(conda_path)) {
-    message("No Conda binary found. Installing Miniconda...")
+    packageStartupMessage("No Conda binary found. Installing Miniconda...")
     reticulate::install_miniconda()
     conda_path = reticulate::conda_binary("auto")
   }
@@ -19,11 +19,14 @@
   env_exists = any(envs$name == envname)
 
   if (!env_exists) {
-    message(paste("Creating Conda environment:", envname))
     reticulate::conda_create(envname = envname, packages = c("python=3.9"))
-    message(paste("Installing 'neo4j' in environment:", envname))
     reticulate::conda_install(envname = envname, packages = "neo4j", pip = TRUE)
   }
 
   reticulate::use_condaenv(envname, required = TRUE)
+}
+
+.onAttach = function(libname, pkgname) {
+  packageStartupMessage("bolt4jr has been loaded. Verifying Conda environment...")
+  packageStartupMessage("If this is your first time using the package, required Python dependencies will be installed.")
 }
