@@ -25,9 +25,9 @@
 convert_df = function(query_result,
                       field_names = c("node_id","n.identifier",
                                       "n.name", "n.source")){
-  converted_df = map(d, function(x){
+  converted_df = purrr::map(query_result, function(x){
     x_vec = unlist(x)
-    map(as.list(field_names), function(fn){
+    purrr::map(as.list(field_names), function(fn){
       field_value = NULL
       try({
         field_value = x_vec[[fn]]
