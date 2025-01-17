@@ -21,7 +21,3 @@ The function ensures that:
 
 Call this function manually before using any functionality that relies on Python.
 }
-\examples{
-setup_bolt4jr()
-
-}
