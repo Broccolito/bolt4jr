@@ -13,7 +13,9 @@
 #' Call this function manually before using any functionality that relies on Python.
 #'
 #' @examples
+#' \dontrun{
 #' setup_bolt4jr()
+#'}
 #'
 #' @export
 setup_bolt4jr = function(){

@@ -1,6 +1,6 @@
 Package: bolt4jr
 Title: An R Interface for the 'Neo4j Bolt' Protocol
-Version: 1.1.0
+Version: 1.2.0
 Authors@R: 
     person("Wanjun", "Gu", , "wanjun.gu@ucsf.edu", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-7342-7000"))
