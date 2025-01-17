@@ -10,7 +10,7 @@
 #' @return A data.frame of results
 #' @export
 #'
-run_query = function(uri, user, password, query) {
+run_query = function(uri, user, password, query){
   py_neo4j = reticulate::import("neo4j", convert = FALSE)
   driver = py_neo4j$GraphDatabase$driver(uri, auth = py_neo4j$basic_auth(user, password))
   session = driver$session()

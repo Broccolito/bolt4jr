@@ -11,12 +11,6 @@
 #' - The `neo4j` Python package is installed in the `bolt4jr` environment.
 #'
 #' Call this function manually before using any functionality that relies on Python.
-#'
-#' @examples
-#' \dontrun{
-#' setup_bolt4jr()
-#'}
-#'
 #' @export
 setup_bolt4jr = function(){
   if (!requireNamespace("reticulate", quietly = TRUE)) {
