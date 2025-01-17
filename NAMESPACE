@@ -3,3 +3,4 @@
 export(convert_df)
 export(run_batch_query)
 export(run_query)
+export(setup_bolt4jr)
