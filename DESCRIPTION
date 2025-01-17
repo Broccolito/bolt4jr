@@ -4,7 +4,7 @@ Version: 1.1.0
 Authors@R: 
     person("Wanjun", "Gu", , "wanjun.gu@ucsf.edu", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-7342-7000"))
-Description: An interface that facilitates querying, extracting, and processing large-scale network data from Neo4j databases using the 'Neo4j Bolt' <https://Neo4j.com/Docs/Bolt/Current/Bolt/> protocol. It supports efficient data retrieval, batch processing for large datasets, and seamless conversion of query results into R data frames, making it ideal for bioinformatics, computational biology, and other graph-based applications.
+Description: An interface that facilitates querying, extracting, and processing large-scale network data from Neo4j databases using the 'Neo4j Bolt' <https://neo4j.com/docs/bolt/current/bolt/> protocol. It supports efficient data retrieval, batch processing for large datasets, and seamless conversion of query results into R data frames, making it ideal for bioinformatics, computational biology, and other graph-based applications.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE, roclets = c("rd", "collate", "namespace"))

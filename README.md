@@ -54,6 +54,15 @@ To securely store your Neo4j connection details (URI, username, and password), y
    password = Sys.getenv("NEO4J_PASSWORD")
    ```
 
+5. Set up conda environment
+
+   ```R
+   setup_bolt4jr()
+   ```
+
+   This function initializes the Conda environment required for the `bolt4jr` package.
+   If no Conda binary is found, it installs Miniconda. If the required Conda environment (`bolt4jr`) is not found, it creates the environment and installs the necessary dependencies.
+
 ------
 
 ## Querying Nodes and Edges from Neo4j
