@@ -14,14 +14,13 @@
 #'   corresponding to the specified \code{field_names}. Missing fields are filled with \code{NA}.
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # Suppose query_result is a list of named lists:
 #' d = convert_df(d, field_names = c("node_id","n.identifier",
 #'                                   "n.name", "n.source"))
 #' }
 #'
 #' @export
-#'
 convert_df = function(query_result,
                       field_names = c("node_id","n.identifier",
                                       "n.name", "n.source")){
