@@ -41,7 +41,7 @@ run_batch_query = function(uri, user, password, query, field_names, filename, ba
   limit = batch_size
   repeat{
     message(glue::glue("Fetching batch starting at {skip}"))
-    updated_query = paste0(query, "\n", glue::glue("SKIP {skip} LIMIT {limit}"))
+    updated_query = paste0(query, "\n", glue::glue("SKIP {format(skip, scientific = FALSE)} LIMIT {format(limit, scientific = FALSE)}"))
     network_data_snippet = run_query(uri = uri, user = user, password = password, query = updated_query)
     network_data_snippet = convert_df(network_data_snippet, field_names = field_names)
     if (nrow(network_data_snippet) == 0) break
