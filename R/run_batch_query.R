@@ -14,7 +14,7 @@
 #' @export
 #'
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' run_batch_query(
 #'   uri = "bolt://localhost:7687",
 #'   user = "<Username for Neo4j>",

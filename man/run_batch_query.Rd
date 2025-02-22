@@ -36,7 +36,7 @@ No return value, called for side effects.
 This function performs batch queries to a Neo4j database and appends the results to a TSV file.
 }
 \examples{
-\donttest{
+\dontrun{
 run_batch_query(
   uri = "bolt://localhost:7687",
   user = "<Username for Neo4j>",

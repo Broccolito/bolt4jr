@@ -8,7 +8,7 @@
 #' @param query_result A list (or similar structure) representing the query result,
 #'   typically containing entries from which fields can be extracted.
 #' @param field_names A character vector of field names to be extracted from each
-#'   entry in \code{query_result}. Defaults to \code{c("node_id","n_identifier","n.name","n.source")}.
+#'   entry in \code{query_result}. Defaults to \code{c("node_id", "n_identifier", "n.name", "n.source")}.
 #'
 #' @return A data frame with one row per entry in \code{query_result}, and columns
 #'   corresponding to the specified \code{field_names}. Missing fields are filled with \code{NA}.
@@ -16,8 +16,15 @@
 #' @examples
 #' \donttest{
 #' # Suppose query_result is a list of named lists:
-#' d = convert_df(d, field_names = c("node_id","n.identifier",
-#'                                   "n.name", "n.source"))
+#' query_result = list(
+#'   list(node_id = 1, n = list(identifier = 1, name = "some node", source = "internet")),
+#'   list(node_id = 2, n = list(identifier = 2, name = "some other node", source = "library"))
+#' )
+#'
+#' query_result_df = convert_df(
+#'   query_result,
+#'   field_names = c("node_id", "n.identifier", "n.name", "n.source")
+#' )
 #' }
 #'
 #' @export
