@@ -128,6 +128,8 @@ head(nodes)
 | 4:c77f6410-bc08-43ba-a172-0503ab1c93db:4 | UBERON:2005118 | middle lateral line primordium   | Uberon   |
 | 4:c77f6410-bc08-43ba-a172-0503ab1c93db:5 | UBERON:0034769 | lymphomyeloid tissue             | Uberon   |
 
+Since some field names (`node_id`) are explicitly specified in the query, and some other field names are known common attributes (`n.identifier`, `n.name`, `n.source`), the extraction will work correctly. If mismatched field names are provided, the function may fail.
+
 ------
 
 ### Querying Edges
@@ -170,6 +172,8 @@ head(edges)
 | ----------------------------------------- | ---------------------------------------- | ---------------------------------------- |
 | 4:c77f6410-bc08-43ba-a172-0503ab1c93db:10 | 4:c77f6410-bc08-43ba-a172-0503ab1c93db:0 | 4:c77f6410-bc08-43ba-a172-0503ab1c93db:1 |
 | 4:c77f6410-bc08-43ba-a172-0503ab1c93db:11 | 4:c77f6410-bc08-43ba-a172-0503ab1c93db:2 | 4:c77f6410-bc08-43ba-a172-0503ab1c93db:3 |
+
+Since all field names (`edge_id`, `start_node_id`, and `end_node_id`) are explicitly specified in the query, the extraction will work correctly. If mismatched field names are provided, the function may fail.
 
 ------
 
@@ -235,6 +239,8 @@ nodes = convert_df(
 # View the data frame
 head(nodes)
 ```
+
+Similar to querying not in batches, please make sure that all field names can be found in the neo4j query or are common attributes.  If mismatched field names are provided, the function may fail.
 
 ------
 
