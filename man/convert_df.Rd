@@ -27,7 +27,7 @@ to extract values corresponding to the given field names. If a particular field
 does not exist in the entry, it is replaced with \code{NA}.
 }
 \examples{
-\dontrun{
+\donttest{
 # Suppose query_result is a list of named lists:
 d = convert_df(d, field_names = c("node_id","n.identifier",
                                   "n.name", "n.source"))

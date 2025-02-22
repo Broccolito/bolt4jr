@@ -7,9 +7,9 @@
 #' @param user Username for Neo4j
 #' @param password Password for Neo4j
 #' @param query A Cypher query to execute, e.g. "MATCH (n) RETURN n LIMIT 5"
-#' @return A data.frame of results
-#' @export
 #'
+#' @return A data.frame containing the query results.
+#' @export
 run_query = function(uri, user, password, query){
   py_neo4j = reticulate::import("neo4j", convert = FALSE)
   driver = py_neo4j$GraphDatabase$driver(uri, auth = py_neo4j$basic_auth(user, password))

@@ -10,7 +10,7 @@ run_batch_query(
   password,
   query,
   field_names,
-  filename,
+  filename = NULL,
   batch_size = 1000
 )
 }
@@ -25,32 +25,25 @@ run_batch_query(
 
 \item{field_names}{A character vector specifying the column names to use for the resulting data.}
 
-\item{filename}{A string specifying the name of the TSV file to save the results.}
+\item{filename}{A string specifying the name of the TSV file to save the results. If NULL, a temporary file will be used.}
 
 \item{batch_size}{An integer specifying the number of records to fetch per batch. Default is 1000.}
 }
 \value{
-The function saves the query results to a TSV file incrementally and does not return any object.
+No return value, called for side effects.
 }
 \description{
 This function performs batch queries to a Neo4j database and appends the results to a TSV file.
 }
 \examples{
-\dontrun{
+\donttest{
 run_batch_query(
   uri = "bolt://localhost:7687",
   user = "<Username for Neo4j>",
   password = "<Password for Neo4j>",
-  query = "
-  MATCH (n)-[r]-(m)
-  WHERE type(r) IN ['ISA_AiA', 'PARTOF_ApA']
-  RETURN DISTINCT
-    elementId(r) AS edge_id,
-    elementId(startNode(r)) AS start_node_id,
-    elementId(endNode(r)) AS end_node_id,
-    r",
-  field_names = c("edge_id", "start_node_id", "end_node_id"),
-  filename = "edges.tsv",
+  query = "MATCH (n) RETURN n LIMIT 10",
+  field_names = c("id", "name"),
+  filename = NULL,  # Writes to a temp file by default
   batch_size = 1000
 )
 }

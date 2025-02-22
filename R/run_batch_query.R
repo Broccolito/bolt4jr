@@ -7,10 +7,10 @@
 #' @param password A string specifying the password for the Neo4j database.
 #' @param query A string containing the Cypher query to execute. The query should not include `SKIP` or `LIMIT`, as these are appended for batching.
 #' @param field_names A character vector specifying the column names to use for the resulting data.
-#' @param filename A string specifying the name of the TSV file to save the results.
+#' @param filename A string specifying the name of the TSV file to save the results. If NULL, a temporary file will be used.
 #' @param batch_size An integer specifying the number of records to fetch per batch. Default is 1000.
 #'
-#' @return The function saves the query results to a TSV file incrementally and does not return any object.
+#' @return No return value, called for side effects.
 #' @export
 #'
 #' @examples
@@ -19,21 +19,17 @@
 #'   uri = "bolt://localhost:7687",
 #'   user = "<Username for Neo4j>",
 #'   password = "<Password for Neo4j>",
-#'   query = "
-#'   MATCH (n)-[r]-(m)
-#'   WHERE type(r) IN ['ISA_AiA', 'PARTOF_ApA']
-#'   RETURN DISTINCT
-#'     elementId(r) AS edge_id,
-#'     elementId(startNode(r)) AS start_node_id,
-#'     elementId(endNode(r)) AS end_node_id,
-#'     r",
-#'   field_names = c("edge_id", "start_node_id", "end_node_id"),
-#'   filename = "edges.tsv",
+#'   query = "MATCH (n) RETURN n LIMIT 10",
+#'   field_names = c("id", "name"),
+#'   filename = NULL,  # Writes to a temp file by default
 #'   batch_size = 1000
 #' )
 #' }
+run_batch_query = function(uri, user, password, query, field_names, filename = NULL, batch_size = 1000) {
+  if (is.null(filename)) {
+    filename = file.path(tempdir(), "query_results.tsv")
+  }
 
-run_batch_query = function(uri, user, password, query, field_names, filename, batch_size = 1000) {
   empty_data = as.data.frame(matrix(character(), ncol = length(field_names)))
   names(empty_data) = field_names
   data.table::fwrite(empty_data, filename, sep = "\t", quote = FALSE)
@@ -49,5 +45,6 @@ run_batch_query = function(uri, user, password, query, field_names, filename, ba
     skip = skip + batch_size
   }
 
-  message("Extraction finished.")
+  message(glue::glue("Extraction finished. Results saved to: {filename}"))
+
 }

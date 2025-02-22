@@ -6,6 +6,9 @@
 \usage{
 setup_bolt4jr()
 }
+\value{
+No return value, called for side effects.
+}
 \description{
 This function initializes the Conda environment required for the \code{bolt4jr} package.
 If no Conda binary is found, it installs Miniconda. If the required Conda environment

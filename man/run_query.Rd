@@ -16,7 +16,7 @@ run_query(uri, user, password, query)
 \item{query}{A Cypher query to execute, e.g. "MATCH (n) RETURN n LIMIT 5"}
 }
 \value{
-A data.frame of results
+A data.frame containing the query results.
 }
 \description{
 This function demonstrates connecting to a Neo4j database via the Python neo4j driver
