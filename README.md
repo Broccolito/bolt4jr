@@ -8,7 +8,7 @@
 
 This README provides a comprehensive guide to installing and using the `bolt4jr` package for extracting network data from Neo4j.
 
-------
+
 
 ## Installation
 
@@ -22,9 +22,8 @@ if (!requireNamespace("remotes", quietly = TRUE)) {
 
 # Install bolt4jr from GitHub
 remotes::install_github("Broccolito/bolt4jr")
-```
 
-------
+```
 
 ## Setting Up Environment Variables
 
@@ -63,7 +62,7 @@ To securely store your Neo4j connection details (URI, username, and password), y
    This function initializes the Conda environment required for the `bolt4jr` package.
    If no Conda binary is found, it installs Miniconda. If the required Conda environment (`bolt4jr`) is not found, it creates the environment and installs the necessary dependencies.
 
-------
+
 
 ## Querying Nodes and Edges from Neo4j
 
@@ -130,7 +129,7 @@ head(nodes)
 
 Since some field names (`node_id`) are explicitly specified in the query, and some other field names are known common attributes (`n.identifier`, `n.name`, `n.source`), the extraction will work correctly. If mismatched field names are provided, the function may fail.
 
-------
+
 
 ### Querying Edges
 
@@ -175,7 +174,7 @@ head(edges)
 
 Since all field names (`edge_id`, `start_node_id`, and `end_node_id`) are explicitly specified in the query, the extraction will work correctly. If mismatched field names are provided, the function may fail.
 
-------
+
 
 ## Extracting Large Datasets in Batches
 
@@ -221,7 +220,7 @@ run_batch_query(
 )
 ```
 
-------
+
 
 ## Additional Features
 
@@ -242,7 +241,7 @@ head(nodes)
 
 Similar to querying not in batches, please make sure that all field names can be found in the neo4j query or are common attributes.  If mismatched field names are provided, the function may fail.
 
-------
+
 
 ## Troubleshooting
 
@@ -250,7 +249,7 @@ Similar to querying not in batches, please make sure that all field names can be
 - **Environment Variables Not Loaded**: Verify that the `.Renviron` file is saved correctly and restart your R session.
 - **Large Query Limits**: Use `run_batch_query` for datasets exceeding memory limits.
 
-------
+
 
 ## Contributing
 
